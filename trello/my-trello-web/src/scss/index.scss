@@ -1,0 +1,100 @@
+$gap: 10px;
+$height: calc(100% - 5px);
+$box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+
+.container-fluid {
+    line-height: 1.8rem;
+    height: 100vh;
+    background-color: #0067a3;
+
+    .board-colum {
+        overflow-x: auto;
+        padding: 1rem;
+
+        &::-webkit-scrollbar {
+            -webkit-appearance: none;
+        }
+
+        &::-webkit-scrollbar:horizontal {
+            height: 1em;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, .24);
+            border-right: 5px #ebecf0 solid;
+        }
+
+        .colum {
+            flex: 0 0 auto;
+            width: 350px;
+            height: $height;
+
+            >* {
+                background-color: #ebecf0;
+
+                color: #333;
+            }
+
+            .top-title {
+                font-size: 1.5rem;
+                line-height: 2;
+                height: 40px;
+                font-weight: bold;
+                padding-left: 1rem;
+                border-top-left-radius: 8px;
+                border-top-right-radius: 8px;
+            }
+
+            .add {
+                border-bottom-left-radius: 8px;
+                border-bottom-right-radius: 8px;
+
+            }
+
+            ul {
+                margin: 0;
+                max-height: 30em;
+                overflow-y: auto;
+                padding-left: 1rem;
+
+                &::-webkit-scrollbar {
+                    -webkit-appearance: none;
+                }
+
+                &::-webkit-scrollbar:vertical {
+                    width: 0.7em;
+                }
+
+                &::-webkit-scrollbar-thumb {
+                    background-color: darken(#ebecf0, 15);
+                    border-right: 5px #ebecf0 solid;
+                }
+
+                li {
+                    padding: 0.2em;
+                    background-color: white;
+                    margin-bottom: 10px;
+                    border-radius: 5px;
+                    box-shadow: $box-shadow;
+                }
+            }
+        }
+    }
+
+    .navbar {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        justify-content: space-between;
+
+        &.nav {
+            font-size: 1.5em;
+        }
+
+        &.board {
+            background-color: #0067a3;
+            font-size: 1.1em;
+        }
+    }
+
+}
