@@ -1,0 +1,11 @@
+@import '../../setting.scss';
+
+
+
+    .list-group-item {
+        padding: 0.2em;
+        
+        margin-bottom: 10px;
+        border-radius: 5px;
+        box-shadow: $box-shadow;
+    }
