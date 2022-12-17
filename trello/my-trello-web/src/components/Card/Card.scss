@@ -3,9 +3,10 @@
 
 
     .list-group-item {
-        padding: 0.2em;
+        padding: 0.4em;
         
         margin-bottom: 10px;
         border-radius: 5px;
         box-shadow: $box-shadow;
+        cursor:pointer;
     }

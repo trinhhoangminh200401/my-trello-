@@ -2,6 +2,7 @@
 .board-colum {
     overflow-x: auto;
     padding: 1rem;
+    overflow-y: hidden;
 
     &::-webkit-scrollbar {
         -webkit-appearance: none;
@@ -14,5 +15,10 @@
     &::-webkit-scrollbar-thumb {
         background-color: rgba(255, 255, 255, .24);
         border-right: 5px #ebecf0 solid;
+    }
+    .cards-drop-preview {
+        background-color: rgba(150, 150, 200, 0.1);
+        border: 1px dashed #abc;
+        margin: 5px 45px 5px 5px;
     }
 }

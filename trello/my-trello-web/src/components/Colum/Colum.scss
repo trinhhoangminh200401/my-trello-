@@ -1,8 +1,10 @@
 @import '../../setting.scss';
+$colum-height: calc(#{$height} - 10px * 2);
+
 .colum {
     flex: 0 0 auto;
     width: 350px;
-    height: $height;
+
 
     >* {
         background-color: #ebecf0;
@@ -30,19 +32,31 @@
         margin: 0;
         max-height: 30em;
         overflow-y: auto;
-        padding-left: 1rem;
-    
+        padding: 1rem;
+
         &::-webkit-scrollbar {
             -webkit-appearance: none;
         }
-    
+
         &::-webkit-scrollbar:vertical {
             width: 0.7em;
         }
-    
+
         &::-webkit-scrollbar-thumb {
             background-color: darken(#ebecf0, 15);
             border-right: 5px #ebecf0 solid;
         }
+
+        .card-ghost {
+            transition: transform 0.18s ease;
+            transform: rotateZ(5deg)
+        }
+
+        .card-ghost-drop {
+            transition: transform 0.18s ease-in-out;
+            transform: rotateZ(0deg)
+        }
+
+
     }
 }
