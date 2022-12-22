@@ -25,7 +25,12 @@ $colum-height: calc(#{$height} - 10px * 2);
     .add {
         border-bottom-left-radius: 8px;
         border-bottom-right-radius: 8px;
-
+        color: #888;
+        cursor: pointer;   
+       
+        &:hover{
+            color: #333;
+        }
     }
 
     .list-group {

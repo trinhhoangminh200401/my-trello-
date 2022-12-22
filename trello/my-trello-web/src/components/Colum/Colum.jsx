@@ -4,19 +4,17 @@ import "./Colum.scss";
 import { Container, Draggable } from "react-smooth-dnd";
 
 function Colum(props) {
-  const { columns } = props;
+  const { columns , onCardDrop} = props;
 
   const cards = columns.cards;
-  const onCardDrop = (dropResult) => {
-    console.log(dropResult);
-  };
+
   return (
     <div className="colum col">
       <div className="top-title">{columns.title}</div>
       <ul className="list-group">
         <Container
           groupName="col"
-          onDrop={onCardDrop}
+          onDrop={dropResult => onCardDrop(columns.id,dropResult)}
           getChildPayload={(index) => cards[index]}
           dragClass="card-ghost"
           dropClass="card-ghost-drop"
@@ -34,7 +32,7 @@ function Colum(props) {
           ))}
         </Container>
       </ul>
-      <div className="add pl-4 text-capitalize">add other card</div>
+      <div className="add pl-4 text-capitalize p-2 "> <i className="fa fa-plus mr-1" /> add other card</div>
     </div>
   );
 }

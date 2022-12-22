@@ -3,7 +3,14 @@
     overflow-x: auto;
     padding: 1rem;
     overflow-y: hidden;
-
+    display: flex;
+    .add-new{
+        width: 15rem ;
+        background-color: hsla(0, 0, 100%, .24);
+        color: white;
+        cursor: pointer;
+        border-radius: 5px;
+    }
     &::-webkit-scrollbar {
         -webkit-appearance: none;
     }

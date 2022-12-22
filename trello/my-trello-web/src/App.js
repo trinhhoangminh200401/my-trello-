@@ -4,7 +4,7 @@ import Boardbar from './components/Boardbar/Boardbar';
 import BoardContent from './components/BoardContent/BoardContent';
 function App() {
   return (
-    <div className="container-fluid ">   
+    <div className="container-fluid">   
       <AppBar />
       <Boardbar />
       <BoardContent />
