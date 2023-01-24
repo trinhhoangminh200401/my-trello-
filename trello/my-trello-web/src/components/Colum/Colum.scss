@@ -1,67 +1,86 @@
-@import '../../setting.scss';
-$colum-height: calc(#{$height} - 10px * 2);
+    @import '../../setting.scss';
+    $colum-height: calc(#{$height} - 10px * 2);
 
-.colum {
-    flex: 0 0 auto;
-    width: 350px;
+    .colum {
+        flex: 0 0 auto;
+        width: 350px;
 
 
-    >* {
-        background-color: #ebecf0;
+        >* {
+            background-color: #ebecf0;
 
-        color: #333;
-    }
-
-    .top-title {
-        font-size: 1.5rem;
-        line-height: 2;
-        height: 40px;
-        font-weight: bold;
-        padding-left: 1rem;
-        border-top-left-radius: 8px;
-        border-top-right-radius: 8px;
-    }
-
-    .add {
-        border-bottom-left-radius: 8px;
-        border-bottom-right-radius: 8px;
-        color: #888;
-        cursor: pointer;   
-       
-        &:hover{
             color: #333;
         }
+
+        .column-drag-handle {
+
+            display: flex;
+
+            font-size: 16px;
+
+            .top-title {
+                flex: 90%;
+                font-size: 1.5rem;
+                line-height: 2;
+                height: 40px;
+                font-weight: bold;
+                padding-left: 1rem;
+                border-top-left-radius: 8px;
+                border-top-right-radius: 8px;
+            }
+
+            .column-dropdown-actions {
+
+                flex: 10%;
+
+
+            }
+
+        }
+
+
+
+
+        .add {
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            color: #888;
+            cursor: pointer;
+
+            &:hover {
+                color: #333;
+            }
+        }
+
+        .list-group {
+            margin: 0;
+            max-height: 30em;
+            overflow-y: auto;
+            padding: 1rem;
+
+            &::-webkit-scrollbar {
+                -webkit-appearance: none;
+            }
+
+            &::-webkit-scrollbar:vertical {
+                width: 0.7em;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background-color: darken(#ebecf0, 15);
+                border-right: 5px #ebecf0 solid;
+            }
+
+            .card-ghost {
+                transition: transform 0.18s ease;
+                transform: rotateZ(5deg)
+            }
+
+            .card-ghost-drop {
+                transition: transform 0.18s ease-in-out;
+                transform: rotateZ(0deg)
+            }
+
+
+        }
     }
-
-    .list-group {
-        margin: 0;
-        max-height: 30em;
-        overflow-y: auto;
-        padding: 1rem;
-
-        &::-webkit-scrollbar {
-            -webkit-appearance: none;
-        }
-
-        &::-webkit-scrollbar:vertical {
-            width: 0.7em;
-        }
-
-        &::-webkit-scrollbar-thumb {
-            background-color: darken(#ebecf0, 15);
-            border-right: 5px #ebecf0 solid;
-        }
-
-        .card-ghost {
-            transition: transform 0.18s ease;
-            transform: rotateZ(5deg)
-        }
-
-        .card-ghost-drop {
-            transition: transform 0.18s ease-in-out;
-            transform: rotateZ(0deg)
-        }
-
-
-    }
-}

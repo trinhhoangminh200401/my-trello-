@@ -4,7 +4,11 @@ body{
   line-height: 1.3rem;
   margin: 0;
   font-size: 15px;
+  min-height: 100%;
   font-family: Arial, Helvetica, sans-serif;
+}
+::-webkit-scrollbar {
+  overflow-y: hidden;
 }
 ul{
   list-style-type: none;

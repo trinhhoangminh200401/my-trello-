@@ -1,16 +1,63 @@
 @import '../../setting.scss';
+
 .board-colum {
     overflow-x: auto;
     padding: 1rem;
     overflow-y: hidden;
     display: flex;
-    .add-new{
-        width: 15rem ;
+
+    .add-new {
+        width: 15rem;
         background-color: hsla(0, 0, 100%, .24);
         color: white;
         cursor: pointer;
         border-radius: 5px;
+
+        &::after {
+            content: '';
+            flex: 0 0 10px;
+        }
+
     }
+
+    .enter-new-column {
+      
+        width: 15rem;
+        max-width: 15rem;
+        background-color: #ebecf0;
+        .col-enter {
+            width: 100%;
+            margin-right: 1rem;
+            padding: 4px 10px;
+
+            .form-control {
+                width: 100%;
+                padding: 0.875rem 10px;
+                margin-left: -1rem;
+                height: 1.3em;
+
+
+            }
+            button{
+                margin: 0.5em 0 0.2em -1em;
+               
+              }
+             
+            span.cancel{
+                cursor: pointer;
+               
+                .icon {
+                    font-size: 1.6em;
+                    color: #ee5253;
+                    &:hover{
+                        color: darken(#ee5253, 10);
+                    }
+                }
+            }
+            
+        }
+    }
+
     &::-webkit-scrollbar {
         -webkit-appearance: none;
     }
@@ -23,6 +70,7 @@
         background-color: rgba(255, 255, 255, .24);
         border-right: 5px #ebecf0 solid;
     }
+
     .cards-drop-preview {
         background-color: rgba(150, 150, 200, 0.1);
         border: 1px dashed #abc;
