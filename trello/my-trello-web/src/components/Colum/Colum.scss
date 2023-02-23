@@ -3,8 +3,8 @@
 
     .colum {
         flex: 0 0 auto;
-        width: 350px;
-
+        width: 320px;
+        margin: 0 0.2rem;
 
         >* {
             background-color: #ebecf0;
@@ -13,26 +13,65 @@
         }
 
         .column-drag-handle {
-
+            padding: 5px 10px;
             display: flex;
+            font-size: 1.5rem;
+            line-height: 2;
+            font-weight: bold;
+            padding-left: 1rem;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
 
-            font-size: 16px;
 
-            .top-title {
+            .column-title {
                 flex: 90%;
-                font-size: 1.5rem;
-                line-height: 2;
-                height: 40px;
-                font-weight: bold;
-                padding-left: 1rem;
-                border-top-left-radius: 8px;
-                border-top-right-radius: 8px;
+
             }
 
             .column-dropdown-actions {
-
                 flex: 10%;
 
+                .dropdown {
+
+                    .dropdown-menu {
+                        padding: 0;
+                        min-width: 100px;
+
+                        button.dropdown-item {
+                            padding: 0.2rem 1rem;
+                            font-size: 14px;
+
+                            &:not(:last-child) {
+                                border-bottom: 1px solid #ebecf0;
+                            }
+                        }
+                    }
+
+                    button.dropdown-btn {
+                        padding: 0 10px;
+                        font-size: 16px;
+                        font-weight: bold;
+                        background-color: #ebecf0;
+                        border-color: #ebecf0;
+                        color: #333;
+                        height: 37px;
+                        letter-spacing: 1px;
+                        margin-top: -10px;
+
+                        &:after {
+                            content: "...";
+                            border: none;
+                            vertical-align: 1.255rem;
+
+                        }
+
+                        &:hover {
+                            background-color: darken($color: #ebecf0, $amount: 10);
+                        }
+                    }
+                }
+
+
 
             }
 
@@ -40,19 +79,30 @@
 
 
 
-
-        .add {
+        footer {
             border-bottom-left-radius: 8px;
             border-bottom-right-radius: 8px;
-            color: #888;
-            cursor: pointer;
+            padding-left: 10px;
+            line-height: 20px;
 
-            &:hover {
-                color: #333;
+            .add {
+                color: #888;
+                cursor: pointer;
+
+                &:hover {
+                    color: #333;
+                }
             }
         }
 
-        .list-group {
+        .add-new-card {
+            .input-enter-new-card {
+                min-height: 2em;
+                max-height: 4em;
+            }
+        }
+
+        .group {
             margin: 0;
             max-height: 30em;
             overflow-y: auto;

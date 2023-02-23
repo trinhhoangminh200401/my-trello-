@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "font-awesome": "^4.7.0",
     "i": "^0.3.7",
+    "lodash": "^4.17.21",
     "node-sass": "^7.0.3",
     "npm": "^9.2.0",
     "react": "^18.2.0",

@@ -2,9 +2,11 @@
 
 .board-colum {
     overflow-x: auto;
-    padding: 1rem;
+    padding: 0.5rem;
     overflow-y: hidden;
     display: flex;
+    width: 100%;
+    margin-left: -1rem;
 
     .add-new {
         width: 15rem;
@@ -22,7 +24,7 @@
 
     .enter-new-column {
       
-        width: 15rem;
+        width: 100%;
         max-width: 15rem;
         background-color: #ebecf0;
         .col-enter {
@@ -42,18 +44,6 @@
                 margin: 0.5em 0 0.2em -1em;
                
               }
-             
-            span.cancel{
-                cursor: pointer;
-               
-                .icon {
-                    font-size: 1.6em;
-                    color: #ee5253;
-                    &:hover{
-                        color: darken(#ee5253, 10);
-                    }
-                }
-            }
             
         }
     }
