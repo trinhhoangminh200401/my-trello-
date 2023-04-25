@@ -2,11 +2,16 @@ import React, { useState, useEffect, useRef } from "react";
 import Colum from "../Colum/Colum";
 import "./BoardContent.scss";
 import { Container, Draggable } from "react-smooth-dnd";
-import { initData } from "../../action/initialdata";
 import { mapSort } from "../../util/sort";
 import { applyDrag } from "../../util/drag";
+import { fetchData,postDataColumn } from "../../action/ApiCall";
+ import { useParams,Link } from "react-router-dom";
+
+
 function BoardContent() {
-  const [board, setBoard] = useState({});
+  const {id}=useParams()
+
+    const [board, setBoard] = useState({});
   const [columns, setColums] = useState([]);
   const [openNew, setOpenNew] = useState(false);
   const [newcolumn, setNewcolumn] = useState("");
@@ -14,11 +19,12 @@ function BoardContent() {
   const onNewColumn = (e) => setNewcolumn(e.target.value);
   const toggleclick = () => setOpenNew(!openNew);
   useEffect(() => {
-    const boardDB = initData.boards.find((board) => board.id === "board-1");
-    if (boardDB) {
-      setBoard(boardDB);
-      setColums(mapSort(boardDB.columns, boardDB.columnOrder, "id"));
-    }
+   const boardId = '64205df7ba0bce1821c2f62f'
+    fetchData(boardId ).then(board => {
+      setBoard(board);
+      setColums(mapSort(board.columns, board.columnOrder, "_id"));
+    })
+  
   }, []);
   useEffect(() => {
     if (newInputref && newInputref.current) {
@@ -33,9 +39,9 @@ function BoardContent() {
     if (dropResult.removeIndex !== null || dropResult.addIndex !== null) {
       console.log("dsa", dropResult);
       const newColums = [...columns];
-      let currentColum = newColums.find((col) => col.id === columnId);
+      let currentColum = newColums.find((col) => col._id === columnId);
       currentColum.cards = applyDrag(currentColum.cards, dropResult);
-      currentColum.cardOrder = currentColum.cards.map((card) => card.id);
+      currentColum.cardOrder = currentColum.cards.map((card) => card._id);
       setColums(newColums);
     }
   };
@@ -45,7 +51,7 @@ function BoardContent() {
     newColum = applyDrag(newColum, dropResult);
     const newBoard = { ...board };
     // console.log(newBoard);
-    newBoard.columnOrder = newColum.map((column) => column.id);
+    newBoard.columnOrder = newColum.map((column) => column._id);
     newBoard.Colum = newColum;
     setColums(newColum);
     setBoard(newBoard);
@@ -57,29 +63,29 @@ function BoardContent() {
     //   return;
     // }
     const newColumAdd = {
-      id: Math.random().toString(36).substring(2, 5),
-      boardId: board.id,
+      boardId: board._id,
       title: newcolumn.trim(),
-      cardOrder: [],
-      cards: [],
     };
-    let newColumns = [...columns];
-    newColumns.push(newColumAdd);
-    let newBoard = { ...board };
-    newBoard.columnOrder = newColumns.map((c) => c.id);
-    newBoard.columns = newColumns;
-    setColums(newColumns);
-    setBoard(newBoard);
-    setNewcolumn("");
+    postDataColumn(newColumAdd).then(newcolumn =>{
+      let newColumns = [...columns];
+      newColumns.push(newcolumn );
+      let newBoard = { ...board };
+      newBoard.columnOrder = newColumns.map((c) => c._id);
+      newBoard.columns = newColumns;
+      setColums(newColumns);
+      setBoard(newBoard);
+      setNewcolumn("");
+    })
+   
   };
   const onUpdateColumn = (newcolumnsupdate) => {
     console.log(newcolumnsupdate)
-    const columnID = newcolumnsupdate.id;
+    const columnID = newcolumnsupdate._id;
 
     let newColumnId = [...columns];
 
     const columnIndexUpdate = newColumnId.findIndex(
-      (item) => item.id == columnID
+      (item) => item._id === columnID
     );
 
     if (newcolumnsupdate._destroy) {
@@ -88,14 +94,15 @@ function BoardContent() {
       newColumnId.splice(columnIndexUpdate, 1, newcolumnsupdate);
     }
     let newBoard = { ...board };
-    newBoard.columnOrder = newColumnId.map((c) => c.id);
+    newBoard.columnOrder = newColumnId.map((c) => c._id);
     newBoard.columns = newColumnId;
     setColums(newColumnId);
     setBoard(newBoard);
   };
 
   return (
-    <div className="col board-colum">
+  
+  <div className="col board-colum">
       <Container
         orientation="horizontal"
         onDrop={onColumnDrop}
@@ -156,6 +163,7 @@ function BoardContent() {
       </div>
     </div>
   );
+  
 }
 
 export default BoardContent;

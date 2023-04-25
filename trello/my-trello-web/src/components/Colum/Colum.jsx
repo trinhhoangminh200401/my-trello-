@@ -5,8 +5,10 @@ import { useState, useEffect, useRef } from "react";
 import { Container, Draggable } from "react-smooth-dnd";
 import ConfirmModal from "../Common/ConfirmModal";
 import { saveContent, selectAllinline } from "../../util/contentEdit";
-import { MODAL_ACTION_CLOSE, MODAL_ACTION_CONFIRM } from "../../util/constant";
+import {  MODAL_ACTION_CONFIRM } from "../../util/constant";
 import { cloneDeep } from "lodash";
+import { mapSort } from "../../util/sort";
+import {  postDataCard,updateDataColumn } from "../../action/ApiCall";
 function Colum(props) {
   const { columns, onCardDrop, onUpdateColumn } = props;
   const [isOpen, setOpen] = useState(false);
@@ -14,9 +16,10 @@ function Colum(props) {
   const [isColumnTitle, setColumnTitle] = useState("");
   const [openNewCard, setOpenNewCard] = useState(false);
   const [card, setNewCard] = useState("");
+  const newCardtextArea = useRef(null);
   const toggleclick = () => setOpenNewCard(!openNewCard);
   const onNewCardTitle = (e) => setNewCard(e.target.value);
-  const newCardtextArea = useRef(null);
+  const cards = mapSort(columns.cards,columns.cardOrder,'_id')
   useEffect(() => {
     setColumnTitle(columns.title);
   }, [columns.title]);
@@ -26,7 +29,7 @@ function Colum(props) {
       newCardtextArea.current.select();
     }
   }, [openNewCard]);
-  const cards = columns.cards;
+  // const cards = columns.cards;
   const toggle = () => {
     setOpen(!isOpen);
   };
@@ -47,9 +50,14 @@ function Colum(props) {
   const handleBlur = () => {
     const newColumns = {
       ...columns,
-      _title: isColumnTitle,
+      title: isColumnTitle,
     };
-    onUpdateColumn(newColumns);
+    // Call api update column here
+    updateDataColumn(newColumns._id,newColumns).then(updated =>{
+      updated.cards = newColumns.cards
+      onUpdateColumn(updated);
+    })
+    
   };
   const addNewCard = () => {
     if(!card){
@@ -57,22 +65,23 @@ function Colum(props) {
       return
     }
     const newCardToAdd = {
-      id: Math.random().toString(36).substring(2, 5),
       boardId: columns.boardId,
-      comlumnId:columns.id,
+      columnId:columns._id,
       title:card.trim(),
-      cover:null
     };
+   postDataCard(newCardToAdd).then(cards=>{
+    let newColum=cloneDeep(columns)
+    if(!newColum.cards) return []
+    newColum.cards.push(cards) 
+    newColum.cardOrder.push(cards._id)
+    onUpdateColumn(newColum)
+    setNewCard("")
+    toggleclick()
    
-  let newColum=cloneDeep(columns)
+  
+   })
  
-  newColum.cards.push(newCardToAdd)
-  newColum.cardOrder.push(newCardToAdd.id)
-  onUpdateColumn(newColum)
-  setNewCard("")
-  toggleclick()
  
-
 
   };
   const menuClass = `dropdown-menu ${isOpen ? "show" : ""}`;
@@ -121,7 +130,7 @@ function Colum(props) {
       <div className="group">
         <Container
           groupName="col"
-          onDrop={(dropResult) => onCardDrop(columns.id, dropResult)}
+          onDrop={(dropResult) => onCardDrop(columns._id, dropResult)}
           getChildPayload={(index) => cards[index]}
           dragClass="card-ghost"
           dropClass="card-ghost-drop"

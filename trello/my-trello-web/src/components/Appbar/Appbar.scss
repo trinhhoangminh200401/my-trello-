@@ -1,6 +1,16 @@
 @import '../../setting.scss';
-.navbar-app {
-    font-size: 1.5em;
-    height: 4vh;
-}
+.dropdown-menu.show {
+    animation: scale-display 1s;
 
+}
+@keyframes scale-display {
+	0% {
+		opacity: 0;
+        display: none;
+	}
+
+	100% {
+        display: block;
+		opacity: 1;
+	}
+}
