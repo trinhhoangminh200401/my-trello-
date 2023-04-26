@@ -42,7 +42,7 @@ function Colum(props) {
         _destroy: true,
       };
       updateDataColumn(newColumns._id,newColumns).then(updated =>{
-        onUpdateColumn(updated);
+        onUpdateColumn(updated)
       })
       toggleConfirm();
     }
