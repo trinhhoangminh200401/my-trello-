@@ -41,22 +41,32 @@ function Colum(props) {
         ...columns,
         _destroy: true,
       };
-      onUpdateColumn(newColumns);
+      updateDataColumn(newColumns._id,newColumns).then(updated =>{
+        onUpdateColumn(updated);
+      })
+      toggleConfirm();
     }
-    toggleConfirm();
+   
   };
   const changeColumnTitle = (e) => setColumnTitle(e.target.value);
 
   const handleBlur = () => {
-    const newColumns = {
-      ...columns,
-      title: isColumnTitle,
-    };
-    // Call api update column here
-    updateDataColumn(newColumns._id,newColumns).then(updated =>{
-      updated.cards = newColumns.cards
-      onUpdateColumn(updated);
-    })
+   
+    console.log(columns.title);
+    console.log(isColumnTitle);
+    if(isColumnTitle !==columns.title){
+      const newColumns = {
+        ...columns,
+        title: isColumnTitle,
+      };
+       // Call api update column here
+      updateDataColumn(newColumns._id,newColumns).then(updated =>{
+        updated.cards = newColumns.cards
+        onUpdateColumn(updated);
+      })
+    }
+   
+
     
   };
   const addNewCard = () => {

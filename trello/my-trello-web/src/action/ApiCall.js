@@ -14,6 +14,7 @@ export const postDataCard = async(data)=>{
       console.log(request.data)
       return request.data
   }
+  // update and remove
   export const updateDataColumn = async(id,data)=>{
     const request = await axios.put(`${API}/v1/columns/${id}`,data)
       return request.data
