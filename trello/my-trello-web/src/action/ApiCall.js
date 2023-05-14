@@ -19,4 +19,9 @@ export const postDataCard = async(data)=>{
     const request = await axios.put(`${API}/v1/columns/${id}`,data)
       return request.data
   }
+
+  export const updateDataBoard = async(id,data)=>{
+    const request = await axios.put(`${API}/v1/boards/${id}`,data)
+      return request.data
+  }
   
