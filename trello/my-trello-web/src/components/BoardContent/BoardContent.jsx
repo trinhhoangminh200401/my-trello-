@@ -4,14 +4,14 @@ import "./BoardContent.scss";
 import { Container, Draggable } from "react-smooth-dnd";
 import { mapSort } from "../../util/sort";
 import { applyDrag } from "../../util/drag";
-import { fetchData,postDataColumn } from "../../action/ApiCall";
+import { fetchData,postDataColumn,updateDataBoard, updateDataColumn} from "../../action/ApiCall";
  import { useParams,Link } from "react-router-dom";
-
+import { isEmpty,cloneDeep } from "lodash";
 
 function BoardContent() {
   const {id}=useParams()
 
-    const [board, setBoard] = useState({});
+   const [board, setBoard] = useState({});
   const [columns, setColums] = useState([]);
   const [openNew, setOpenNew] = useState(false);
   const [newcolumn, setNewcolumn] = useState("");
@@ -32,29 +32,54 @@ function BoardContent() {
       newInputref.current.select();
     }
   }, [openNew]);
-  if (Object.keys(board).length === 0 && board.constructor === Object) {
+  if (isEmpty(board)) {
     return <div>NotFound</div>;
   }
+  
+
+  const onColumnDrop = (dropResult) => {
+    let newColum = cloneDeep(columns);
+    newColum = applyDrag(newColum, dropResult);
+    const newBoard = cloneDeep(board);
+    // console.log(newBoard);
+    newBoard.columnOrder = newColum.map((column) => column._id);
+    newBoard.columns = newColum;
+    // call api
+    setColums(newColum);
+      setBoard(newBoard);
+    updateDataBoard(newBoard._id,newBoard).catch(error => {
+      console.log(error);
+      setColums(columns);
+       setBoard(newBoard);
+    })
+ 
+  };
   const onCardDrop = (columnId, dropResult) => {
-    if (dropResult.removeIndex !== null || dropResult.addIndex !== null) {
-      console.log("dsa", dropResult);
-      const newColums = [...columns];
+    if (dropResult.removedIndex !== null || dropResult.addIndex !== null) {
+      const newColums = cloneDeep(columns);
       let currentColum = newColums.find((col) => col._id === columnId);
       currentColum.cards = applyDrag(currentColum.cards, dropResult);
       currentColum.cardOrder = currentColum.cards.map((card) => card._id);
       setColums(newColums);
+     
+      if (dropResult.removedIndex !== null && dropResult.addIndex !== null) {
+        updateDataColumn(currentColum._id,currentColum).catch(()=>{
+          setColums(columns)
+        })
+      }
+       else{
+        updateDataColumn(currentColum._id,currentColum).catch(()=>{ 
+          setColums(columns)
+        })
+        let currentCard=cloneDeep(dropResult.payload)
+        currentCard.columnId=currentColum._id
+        // move card between two column
+        // updaye cardorder two column and card
+        console.log(currentCard);
+       }
+        
     }
-  };
-
-  const onColumnDrop = (dropResult) => {
-    let newColum = [...columns];
-    newColum = applyDrag(newColum, dropResult);
-    const newBoard = { ...board };
-    // console.log(newBoard);
-    newBoard.columnOrder = newColum.map((column) => column._id);
-    newBoard.Colum = newColum;
-    setColums(newColum);
-    setBoard(newBoard);
+    
   };
   const addNewcolumn = () => {
     // if (!newcolumn) {
